@@ -1,0 +1,14 @@
+{
+  "name": "simple-javascript-blog",
+  "version": "1.0.0",
+  "description": "A responsive blog built with javascript and node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Okiki Oye-Lawrence",
+  "license": "ISC",
+  "dependencies": {
+    "node-sass": "4.11.0"
+  }
+}
