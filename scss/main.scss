@@ -1,11 +1,66 @@
-.index {
-  color: blue;
+@import "config";
+@import "menu";
+
+* {
+  box-sizing: border-box;
 }
 
-.index .indi{
-  color: green;
+body {
+  @include background;
+  background: $primary-color;
+  color: $tetiary-color;
+  height: 100%;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+}
+
+// Headings
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 400;
+
+  &.lg-heading {
+    font-size: 4rem;
+  }
+}
+
+a {
+  color: $tetiary-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $secondary-color;
+    @include easeOut();
+  }
+}
+
+// Header
+header {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+}
+
+main {
+  padding: 4rem;
+  min-height: calc(100vh - 60px);
+}
+
+.index {
+  text-align: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.text-secondary {
+  color: $secondary-color;
 }
 
 .footer {
-  color: red;
+  text-align: center;
+  padding: 1rem 0 0 0;
+  color: inherit;
+  background: rgba(lighten($tetiary-color, 2), 0.5);
+  height: 60px;
 }
