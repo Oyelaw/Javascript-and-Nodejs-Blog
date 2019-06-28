@@ -1,20 +1,39 @@
 // Widescreens
-// Widescreens
 @include mediaXl {
-
+  .index {
+    background: red;
+  }
 }
 
 // Desktops & Laptops
 @include mediaLg {
+  .index {
+    background: blue;
+  }
 
+  .articles {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 20px;
+  }
 }
 
 // Tablets & Small Laptops
 @include mediaMd {
+  .index {
+    background: green;
+  }
 
+  .articles {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+  }
 }
 
 // Smartphones
 @include mediaSm {
-
+  .index {
+    background: pink;
+  }
 }

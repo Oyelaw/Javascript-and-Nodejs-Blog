@@ -94,7 +94,11 @@
   .articles .post {
     background: #444;
     text-align: center;
-    padding: 5px 0 0 0; }
+    padding: 1rem 1rem;
+    transition: all 0.5s ease-out; }
+    .articles .post:hover {
+      padding: 0.5rem 0.5rem;
+      background: #eece1a; }
     .articles .post .titlesIndex {
       text-transform: uppercase;
       text-decoration: none;
@@ -157,3 +161,27 @@ main {
   color: inherit;
   background: rgba(255, 255, 255, 0.5);
   height: 60px; }
+
+@media screen and (min-width: 1171px) {
+  .index {
+    background: red; } }
+
+@media screen and (min-width: 769px) and (max-width: 1170px) {
+  .index {
+    background: blue; }
+  .articles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px; } }
+
+@media screen and (max-width: 768px) {
+  .index {
+    background: green; }
+  .articles {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px; } }
+
+@media screen and (max-width: 500px) {
+  .index {
+    background: pink; } }
