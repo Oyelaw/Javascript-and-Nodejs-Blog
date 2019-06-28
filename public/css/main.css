@@ -79,6 +79,29 @@
 .nav-item:nth-child(5) {
   transition-delay: 1s; }
 
+.index {
+  text-align: center;
+  justify-content: center;
+  overflow: hidden; }
+
+.articles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px; }
+  .articles img {
+    height: 270px;
+    width: 270px; }
+  .articles .post {
+    background: #444;
+    text-align: center;
+    padding: 5px 0 0 0; }
+    .articles .post .titlesIndex {
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.5s ease-out; }
+      .articles .post .titlesIndex:hover {
+        color: #eece1a; }
+
 * {
   box-sizing: border-box; }
 
@@ -124,11 +147,6 @@ header {
 main {
   padding: 4rem;
   min-height: calc(100vh - 60px); }
-
-.index {
-  text-align: center;
-  justify-content: center;
-  overflow: hidden; }
 
 .text-secondary {
   color: #eece1a; }

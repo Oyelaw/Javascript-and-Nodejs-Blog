@@ -1,5 +1,6 @@
 @import "config";
 @import "menu";
+@import "index";
 
 * {
   box-sizing: border-box;
@@ -45,12 +46,6 @@ header {
 main {
   padding: 4rem;
   min-height: calc(100vh - 60px);
-}
-
-.index {
-  text-align: center;
-  justify-content: center;
-  overflow: hidden;
 }
 
 .text-secondary {

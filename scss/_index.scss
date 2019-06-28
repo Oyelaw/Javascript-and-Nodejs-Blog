@@ -1,0 +1,33 @@
+.index {
+  text-align: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.articles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+
+  img {
+    height: 270px;
+    width: 270px;
+  }
+
+  .post{
+    background: $primary-color;
+    text-align: center;
+    padding: 5px 0 0 0;
+
+
+    .titlesIndex {
+      text-transform: uppercase;
+      text-decoration: none;
+      @include easeOut;
+
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+  }
+}
