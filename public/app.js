@@ -46,8 +46,10 @@ app.logUserOut = function (redirectUser) {
 
   httpRequest.request(undefined, 'api/tokens', 'DELETE', queryStringObject, undefined)
     .then(function (response) {
-      console.log('RESPonse from logout', response);
       app.setSessionToken(false);
+      if (redirectUser) {
+        window.location = '/session/deleted';
+      }
     })
     .catch(function (err) {
       console.log(`Error logging out. Error: ${err}`);
