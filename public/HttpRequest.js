@@ -38,6 +38,9 @@ class HttpRequest {
        }
     };
 
+    // if(app.config.sessionToken){
+    //   fHeaders.append("token", app.config.sessionToken.id);
+    // }
     //Send the Fetch request
          return new Promise((resolve, reject) => {
            fetch(requestUrl, {

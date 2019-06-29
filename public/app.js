@@ -16,35 +16,61 @@ app.config = {
   'sessionToken': false
 };
 
+// Bind the logout button
+app.bindLogoutButton = function () {
+  var logoutButton = document.getElementById('logoutButton');
+
+  if (logoutButton != null) {
+    logoutButton.addEventListener('click', function (e) {
+
+      e.preventDefault();
+
+      // Log user out
+      app.logUserOut();
+    })
+  }
+};
+
+// Log user out then redirect them
+app.logUserOut = function (redirectUser) {
+
+  // Set redirectUser to default to true
+  redirectUser = typeof(redirectUser) == 'boolean' ? redirectUser : true;
+
+  // Get the current token id
+  var tokenId = typeof(app.config.sessionToken.id) == 'string' ? app.config.sessionToken.id : false;
+
+  var queryStringObject = {
+    'id' : tokenId
+  };
+
+  httpRequest.request(undefined, 'api/tokens', 'DELETE', queryStringObject, undefined)
+    .then(function (response) {
+      console.log('RESPonse from logout', response);
+      app.setSessionToken(false);
+    })
+    .catch(function (err) {
+      console.log(`Error logging out. Error: ${err}`);
+    })
+};
+
 // Set the session token in the app.config object as well as localstorage
 app.setSessionToken = function(token){
   app.config.sessionToken = token;
   var tokenString = JSON.stringify(token);
   localStorage.setItem('token',tokenString);
-  if(typeof(token) == 'object'){
-    // app.setLoggedInClass(true);
-    ui.showAlert('Session created', 'formSuccess alert');
-  } else {
-    ui.showAlert('Session not created', 'formError alert');
-  }
 };
 
 // Get the session token from localstorage and set it in the app.config object
 app.getSessionToken = function () {
   var tokenString = localStorage.getItem('token');
   if (typeof(tokenString) == 'string') {
-    try{
+    try {
       var token = JSON.parse(tokenString);
       app.config.sessionToken = token;
-      if (typeof(token) == 'object') {
-        ui.showAlert('Session token obtained', 'formSuccess alert');
-      } else {
-        ui.showAlert('Session not token obtained', 'formError alert');
-      }
     } catch(e) {
       app.config.sessionToken = false;
-      ui.showAlert('Unknown error', 'formError alert');
-      console.log('Error:', err);
+      console.log(`Error getting token. Error: ${err}`);
     }
   }
 };
@@ -74,15 +100,72 @@ app.bindLoginForm = function () {
         };
         httpRequest.request(undefined, 'api/tokens', 'POST', undefined, payload)
           .then(function (response) {
-            app.setSessionToken(response);
-            window.location = '/admin/dashboard';
+            app.formResponseProcessor(formId, payload, response);
           })
           .catch(function (err) {
-            ui.showAlert('Unknown error', 'formError alert');
-            console.log('Error:', err);
+            console.log(`Error logging in. Error: ${err}`);
           })
       }
     });
+  }
+};
+
+app.bindCreatePostForm = function () {
+  var createPostForm = document.getElementById('createPost');
+
+  if (createPostForm != null) {
+    createPostForm.addEventListener('submit', function (e) {
+
+      e.preventDefault();
+            var formId = this.id;
+            var path = this.action;
+            var method = this.method.toUpperCase();
+
+            //Get the title, body and pictures
+            var postTitle = document.getElementById('postTitle').value;
+            var postBody = document.getElementById('postBody').value;
+            var postPictures = document.getElementById('postPictures').value;
+
+            if (postTitle == '' || postBody == '') {
+              // show alert
+              ui.showAlert('Enter required fields', 'formError alert')
+            } else {
+              // Parse images to array
+              var parsedImages = postPictures ? JSON.parse(postPictures) : '';
+
+              var payload = {
+                title: postTitle,
+                article: postBody,
+                images: parsedImages
+              };
+
+              var headers = {
+                "token" : app.config.sessionToken.id
+              };
+
+              httpRequest.request(headers, 'api/post', 'POST', undefined, payload)
+                .then(function (response) {
+                  app.formResponseProcessor(formId, payload, response);
+                })
+                .catch(function (err) {
+                  console.log(`Error creating post. Error: ${err}`);
+                })
+            }
+    });
+  }
+};
+
+// Process response from forms
+app.formResponseProcessor = function (formId, requestPayload, responsePayload) {
+
+  if (formId == 'adminLogin') {
+    app.setSessionToken(responsePayload);
+    window.location = '/admin/dashboard';
+  }
+
+  if (formId == 'createPost') {
+    ui.showAlert('Post created!!!', 'formSuccess alert');
+    ui.clearPostCreateForm();
   }
 };
 
@@ -125,14 +208,12 @@ app.loadIndexPage = function () {
             append(container, postDiv);
           })
           .catch(function (err) {
-            ui.showAlert('Unknown error', 'formError alert');
-            console.log('Error: ', err);
+            console.log(`Error Fetching post. Error: ${err}`);
           })
       })
     })
     .catch(function (err) {
-      ui.showAlert('Unknown error', 'formError alert');
-      console.log('Error: ', err);
+      console.log(`Error Fetching all posts. Error: ${err}`);
     });
 };
 
@@ -192,12 +273,12 @@ app.loadPostViewPage = function () {
 
       })
       .catch(function (err) {
-        ui.showAlert('Oops, could not load post', 'formError alert');
+        console.log(`Error loading post. Error: ${err}`);
         window.location = '/';
       })
 
   } else {
-    ui.showAlert('Oops, could not load post', 'formError alert');
+    console.log(`Error loading post. Error: ${err}`);
     window.location = '/';
   }
 }
@@ -218,9 +299,15 @@ app.loadDataOnPage = function () {
 };
 
 app.init = function () {
+  app.getSessionToken();
+
   app.loadDataOnPage();
 
   app.bindLoginForm();
+
+  app.bindCreatePostForm();
+
+  app.bindLogoutButton();
 };
 
 window.onload = function(){

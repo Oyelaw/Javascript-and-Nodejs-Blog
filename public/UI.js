@@ -46,4 +46,20 @@ clearAlert() {
     currentAlert.remove();
   }
 }
+
+// Clear Post create form fields
+clearPostCreateForm() {
+  // Create templacholder for Images
+  var picturesFormat = [
+      {"name": "Main image", "src": "public/img/background.jpg"},
+      {"name": "Extra image", "src": "public/img/background.jpg"},
+      {"name": "Extra image", "src": "public/img/background.jpg"},
+      {"name": "Extra image", "src": "public/img/background.jpg"},
+      {"name": "Extra image", "src": "public/img/background.jpg"}
+    ];
+  //Get the title, body and pictures
+  var postTitle = document.getElementById('postTitle').value = '';
+  var postBody = document.getElementById('postBody').value = '';
+  var postPictures = document.getElementById('postPictures').value = JSON.stringify(picturesFormat);
+}
 };

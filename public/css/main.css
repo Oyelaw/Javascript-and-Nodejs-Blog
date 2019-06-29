@@ -144,6 +144,14 @@
   text-align: center;
   align-items: center; }
 
+.adminDashboard {
+  justify-content: center;
+  text-align: center;
+  align-items: center; }
+
+.postPictures {
+  line-height: 1.5; }
+
 * {
   box-sizing: border-box; }
 

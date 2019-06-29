@@ -1,0 +1,44 @@
+<h1>Welcome to the Admin Section</h1>
+<h2>You can create new posts and view stats about the blog</h2>
+<hr>
+
+<div class="formWrapper">
+  <form id="createPost" action="/api/post" method="POST">
+    <div class="inputWrapper">
+      <div class="inputLabel">Post Title</div>
+      <input type="text" name="title" id="postTitle" placeholder="A Post About Posts">
+    </div>
+    <div class="inputWrapper">
+      <div class="inputLabel">Post Body</div>
+      <textarea name="article" id="postBody" rows="8" cols="60">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna
+        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+        ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+        cupidatat non proident, sunt in culpa qui officia deserunt mollit
+        anim id est laborum.
+      </textarea>
+    </div>
+    <div class="inputWrapper">
+      <div class="inputLabel">Select Post Images</div>
+        <textarea name="postPictures" id="postPictures" class="postPictures" rows="8" cols="60">
+          [
+            {"name": "Main image", "src": "public/img/background.jpg"},
+            {"name": "Extra image", "src": "public/img/background.jpg"},
+            {"name": "Extra image", "src": "public/img/background.jpg"},
+            {"name": "Extra image", "src": "public/img/background.jpg"},
+            {"name": "Extra image", "src": "public/img/background.jpg"}
+          ]
+        </textarea>
+    </div>
+    <div class="inputWrapper ctaWrapper">
+      <button type="submit" class="cta yellow">Create Post</button>
+    </div>
+  </form>
+</div>
+
+<div class="inputWrapper ctaWrapper">
+  <button type="submit" id="logoutButton" class="cta">Logout</button>
+</div>
