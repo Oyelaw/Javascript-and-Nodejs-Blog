@@ -10,13 +10,11 @@
 }
 
 body {
-  @include background;
   background: $primary-color;
   color: $tetiary-color;
   height: 100%;
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.5;
 }
 
 // Headings
@@ -54,7 +52,7 @@ main {
   text-align: center;
   padding: 1rem 0 0 0;
   color: inherit;
-  background: rgba(lighten($primary-color, 2), 0.9);
+  background: rgba(lighten($tetiary-color, 2), 0.2);
   height: 60px;
 }
 
@@ -89,7 +87,7 @@ main {
 .formSuccess{
   background-color: #217844;
   font-style: italic;
-  color: #fff;
+  color: $primary-color;
   padding: 10px 15px;
   border-radius: 5px;
   margin: 0 0 15px 0;
@@ -101,7 +99,7 @@ main {
 
 .cta{
   background-color: $tetiary-color;
-  color: #fff;
+  color: $primary-color;
   border-radius: 10px;
   text-transform: uppercase;
   font-weight: bold;

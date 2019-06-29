@@ -113,47 +113,54 @@ app.bindLoginForm = function () {
 };
 
 app.bindCreatePostForm = function () {
-  var createPostForm = document.getElementById('createPost');
+  var email = typeof(app.config.sessionToken.email) == 'string' ? app.config.sessionToken.email : false;
 
-  if (createPostForm != null) {
-    createPostForm.addEventListener('submit', function (e) {
+  if (email) {
 
-      e.preventDefault();
-            var formId = this.id;
-            var path = this.action;
-            var method = this.method.toUpperCase();
+      var createPostForm = document.getElementById('createPost');
 
-            //Get the title, body and pictures
-            var postTitle = document.getElementById('postTitle').value;
-            var postBody = document.getElementById('postBody').value;
-            var postPictures = document.getElementById('postPictures').value;
+      if (createPostForm != null) {
+        createPostForm.addEventListener('submit', function (e) {
 
-            if (postTitle == '' || postBody == '') {
-              // show alert
-              ui.showAlert('Enter required fields', 'formError alert')
-            } else {
-              // Parse images to array
-              var parsedImages = postPictures ? JSON.parse(postPictures) : '';
+          e.preventDefault();
+          var formId = this.id;
+          var path = this.action;
+          var method = this.method.toUpperCase();
 
-              var payload = {
-                title: postTitle,
-                article: postBody,
-                images: parsedImages
-              };
+          //Get the title, body and pictures
+          var postTitle = document.getElementById('postTitle').value;
+          var postBody = document.getElementById('postBody').value;
+          var postPictures = document.getElementById('postPictures').value;
 
-              var headers = {
-                "token" : app.config.sessionToken.id
-              };
+          if (postTitle == '' || postBody == '') {
+            // show alert
+            ui.showAlert('Enter required fields', 'formError alert');
+          } else {
+            // Parse images to array
+            var parsedImages = postPictures ? JSON.parse(postPictures) : '';
 
-              httpRequest.request(headers, 'api/post', 'POST', undefined, payload)
-                .then(function (response) {
-                  app.formResponseProcessor(formId, payload, response);
-                })
-                .catch(function (err) {
-                  console.log(`Error creating post. Error: ${err}`);
-                })
-            }
-    });
+            var payload = {
+              title: postTitle,
+              article: postBody,
+              images: parsedImages
+            };
+
+            var headers = {
+              "token" : app.config.sessionToken.id
+            };
+
+            httpRequest.request(headers, 'api/post', 'POST', undefined, payload)
+              .then(function (response) {
+                app.formResponseProcessor(formId, payload, response);
+              })
+              .catch(function (err) {
+                console.log(`Error creating post. Error: ${err}`);
+              })
+          }
+        });
+      }
+  } else {
+    app.logUserOut()
   }
 };
 
@@ -180,38 +187,38 @@ app.loadIndexPage = function () {
           id: postId
         };
 
-        // Fetch post by Id
-        httpRequest.request(undefined, 'api/post', 'GET', queryStringObject, undefined)
-          .then(function (post) {
-            var container = document.querySelector('.articles');
-            var postDiv = createNode('div');
-            var postThumbnail = createNode('img');
-            var titleDiv = createNode('div');
-            var titleParagraph = createNode('p');
-            var linkTag = createNode('a');
+      // Fetch post by Id
+      httpRequest.request(undefined, 'api/post', 'GET', queryStringObject, undefined)
+        .then(function (post) {
+          var container = document.querySelector('.articles');
+          var postDiv = createNode('div');
+          var postThumbnail = createNode('img');
+          var titleDiv = createNode('div');
+          var titleParagraph = createNode('p');
+          var linkTag = createNode('a');
 
-            linkTag.href = `post/view?id=${post.id}`;
+          linkTag.href = `post/view?id=${post.id}`;
 
-            addToClasslist(postDiv, 'post');
-            addToClasslist(titleDiv, 'titlesIndex');
+          addToClasslist(postDiv, 'post');
+          addToClasslist(titleDiv, 'titlesIndex');
 
-            var { images } = post;
-            if (images.length > 0 && images[0].src) {
-              postThumbnail.src = images[0].src;
-              postThumbnail.alt = 'ArticlesImage';
-            };
+          var { images } = post;
+          if (images.length > 0 && images[0].src) {
+            postThumbnail.src = images[0].src;
+            postThumbnail.alt = 'ArticlesImage';
+          };
 
-            var titleTextNode = document.createTextNode(post.title);
-            append(titleParagraph, titleTextNode);
-            append(titleDiv, titleParagraph);
-            append(linkTag, postThumbnail);
-            append(linkTag, titleDiv);
-            append(postDiv, linkTag);
-            append(container, postDiv);
-          })
-          .catch(function (err) {
-            console.log(`Error Fetching post. Error: ${err}`);
-          })
+          var titleTextNode = document.createTextNode(post.title);
+          append(titleParagraph, titleTextNode);
+          append(titleDiv, titleParagraph);
+          append(linkTag, postThumbnail);
+          append(linkTag, titleDiv);
+          append(postDiv, linkTag);
+          append(container, postDiv);
+        })
+        .catch(function (err) {
+          console.log(`Error Fetching post. Error: ${err}`);
+        })
       })
     })
     .catch(function (err) {
@@ -259,20 +266,19 @@ app.loadPostViewPage = function () {
 
         var postImages = {};
         // create helper function for below
-          postImages.images = typeof(responsePayload.images) == 'object' && responsePayload.images instanceof Array ? responsePayload.images : [];
-          postImages.images[0] ? mainImage.src = postImages.images[0].src : mainImage.style.display = 'none' ;
-          postImages.images[1] ? extraImage1.src = postImages.images[1].src : extraImage1.style.display = 'none' ;
-          postImages.images[2] ? extraImage2.src  = postImages.images[2].src : extraImage2.style.display = 'none' ;
-          postImages.images[3] ? extraImage3.src = postImages.images[3].src : extraImage3.style.display = 'none' ;
-          postImages.images[4] ? extraImage4.src = postImages.images[4].src : extraImage4.style.display = 'none' ;
+        postImages.images = typeof(responsePayload.images) == 'object' && responsePayload.images instanceof Array ? responsePayload.images : [];
+        postImages.images[0] ? mainImage.src = postImages.images[0].src : mainImage.style.display = 'none' ;
+        postImages.images[1] ? extraImage1.src = postImages.images[1].src : extraImage1.style.display = 'none' ;
+        postImages.images[2] ? extraImage2.src  = postImages.images[2].src : extraImage2.style.display = 'none' ;
+        postImages.images[3] ? extraImage3.src = postImages.images[3].src : extraImage3.style.display = 'none' ;
+        postImages.images[4] ? extraImage4.src = postImages.images[4].src : extraImage4.style.display = 'none' ;
 
-          append(leftPaneContent, mainImage);
-          append(leftPaneContent, articleParagraph);
-          append(leftPaneContent, extraImage1);
-          append(leftPaneContent, extraImage2);
-          append(leftPaneContent, extraImage3);
-          append(leftPaneContent, extraImage4);
-
+        append(leftPaneContent, mainImage);
+        append(leftPaneContent, articleParagraph);
+        append(leftPaneContent, extraImage1);
+        append(leftPaneContent, extraImage2);
+        append(leftPaneContent, extraImage3);
+        append(leftPaneContent, extraImage4);
       })
       .catch(function (err) {
         console.log(`Error loading post. Error: ${err}`);
@@ -298,6 +304,11 @@ app.loadDataOnPage = function () {
   if(primaryClass == 'postView'){
     app.loadPostViewPage();
   }
+
+  if(primaryClass == 'adminDashboard'){
+    app.bindCreatePostForm();
+  }
+
 };
 
 app.init = function () {
@@ -306,8 +317,6 @@ app.init = function () {
   app.loadDataOnPage();
 
   app.bindLoginForm();
-
-  app.bindCreatePostForm();
 
   app.bindLogoutButton();
 };

@@ -160,21 +160,7 @@ body {
   color: #13334c;
   height: 100%;
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.5; }
-  body.bg-img {
-    background: url(../img/background.jpg);
-    background-attachment: fixed;
-    background-size: cover; }
-  body:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: rgba(244, 240, 230, 0.9); }
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
 
 h1, h2, h3 {
   margin: 0;
@@ -202,7 +188,7 @@ main {
   text-align: center;
   padding: 1rem 0 0 0;
   color: inherit;
-  background: rgba(247, 244, 237, 0.9);
+  background: rgba(21, 56, 84, 0.2);
   height: 60px; }
 
 .formWrapper {
@@ -232,7 +218,7 @@ main {
 .formSuccess {
   background-color: #217844;
   font-style: italic;
-  color: #fff;
+  color: #f4f0e6;
   padding: 10px 15px;
   border-radius: 5px;
   margin: 0 0 15px 0;
@@ -243,7 +229,7 @@ main {
 
 .cta {
   background-color: #13334c;
-  color: #fff;
+  color: #f4f0e6;
   border-radius: 10px;
   text-transform: uppercase;
   font-weight: bold;
