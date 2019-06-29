@@ -38,7 +38,6 @@ class HttpRequest {
        }
     };
 
-    console.log('HttpRequest', payload);
     //Send the Fetch request
          return new Promise((resolve, reject) => {
            fetch(requestUrl, {

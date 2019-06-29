@@ -1,3 +1,9 @@
+/*
+ *  Frontend Application Logic
+ *
+ */
+
+// Required classes
 var httpRequest = new HttpRequest;
 var ui = new UI;
 
@@ -8,6 +14,76 @@ var app = {};
 // Config
 app.config = {
   'sessionToken': false
+};
+
+// Set the session token in the app.config object as well as localstorage
+app.setSessionToken = function(token){
+  app.config.sessionToken = token;
+  var tokenString = JSON.stringify(token);
+  localStorage.setItem('token',tokenString);
+  if(typeof(token) == 'object'){
+    // app.setLoggedInClass(true);
+    ui.showAlert('Session created', 'formSuccess alert');
+  } else {
+    ui.showAlert('Session not created', 'formError alert');
+  }
+};
+
+// Get the session token from localstorage and set it in the app.config object
+app.getSessionToken = function () {
+  var tokenString = localStorage.getItem('token');
+  if (typeof(tokenString) == 'string') {
+    try{
+      var token = JSON.parse(tokenString);
+      app.config.sessionToken = token;
+      if (typeof(token) == 'object') {
+        ui.showAlert('Session token obtained', 'formSuccess alert');
+      } else {
+        ui.showAlert('Session not token obtained', 'formError alert');
+      }
+    } catch(e) {
+      app.config.sessionToken = false;
+      ui.showAlert('Unknown error', 'formError alert');
+      console.log('Error:', err);
+    }
+  }
+};
+
+// Bind Admin Login form
+app.bindLoginForm = function () {
+  var loginForm = document.getElementById('adminLogin');
+
+  if (loginForm != null) {
+    loginForm.addEventListener('submit', function (e) {
+
+      e.preventDefault();
+      var formId = this.id;
+      var path = this.action;
+      var method = this.method.toUpperCase();
+      //Get the email and password
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+
+      if (email == '' || password == '') {
+        // Show form error to enter required fields
+        ui.showAlert('Enter required fields', 'formError alert')
+      } else {
+        var payload = {
+          email: email,
+          password: password
+        };
+        httpRequest.request(undefined, 'api/tokens', 'POST', undefined, payload)
+          .then(function (response) {
+            app.setSessionToken(response);
+            window.location = '/admin/dashboard';
+          })
+          .catch(function (err) {
+            ui.showAlert('Unknown error', 'formError alert');
+            console.log('Error:', err);
+          })
+      }
+    });
+  }
 };
 
 app.loadIndexPage = function () {
@@ -49,11 +125,13 @@ app.loadIndexPage = function () {
             append(container, postDiv);
           })
           .catch(function (err) {
+            ui.showAlert('Unknown error', 'formError alert');
             console.log('Error: ', err);
           })
       })
     })
     .catch(function (err) {
+      ui.showAlert('Unknown error', 'formError alert');
       console.log('Error: ', err);
     });
 };
@@ -89,9 +167,11 @@ app.loadPostViewPage = function () {
         addToClasslist(extraImage3, 'postImage-extra');
         addToClasslist(extraImage4, 'postImage-extra');
 
-
         var articleParagraph = createNode('p');
         var articleTextNode = document.createTextNode(article);
+
+        addToClasslist(articleParagraph, 'article');
+
         append(articleParagraph, articleTextNode);
 
         var postImages = {};
@@ -112,11 +192,13 @@ app.loadPostViewPage = function () {
 
       })
       .catch(function (err) {
-        console.log('Error: ', err);
+        ui.showAlert('Oops, could not load post', 'formError alert');
+        window.location = '/';
       })
 
   } else {
-    alert('Where do I go??')
+    ui.showAlert('Oops, could not load post', 'formError alert');
+    window.location = '/';
   }
 }
 
@@ -137,6 +219,8 @@ app.loadDataOnPage = function () {
 
 app.init = function () {
   app.loadDataOnPage();
+
+  app.bindLoginForm();
 };
 
 window.onload = function(){
