@@ -184,24 +184,29 @@ app.bindAccountCreateForm = function () {
       var password = document.getElementById('password').value;
       var tosAgreement = document.getElementById('tosAgreement').checked;
 
-      // Create Post request payload
-      var payload = {
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        email: email,
-        password: password,
-        tosAgreement: tosAgreement
-      };
+      if (firstName == '' || lastName == '' || phone == '' || email == '' || password == '' || tosAgreement == false) {
+        // show alert
+        ui.showAlert('Enter required fields', 'formError alert');
+      } else {
+        // Create Post request payload
+        var payload = {
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+          email: email,
+          password: password,
+          tosAgreement: tosAgreement
+        };
 
-      // Send request
-      httpRequest.request(undefined, path, method, undefined, payload)
-        .then(function (response) {
-          app.formResponseProcessor(formId, payload, response);
-        })
-        .catch(function (err) {
-          console.log(`Error creating new user. Error: ${err}`);
-        })
+        // Send request
+        httpRequest.request(undefined, path, method, undefined, payload)
+          .then(function (response) {
+            app.formResponseProcessor(formId, payload, response);
+          })
+          .catch(function (err) {
+            console.log(`Error creating new user. Error: ${err}`);
+          })
+      }
     })
   }
 };

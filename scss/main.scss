@@ -4,6 +4,7 @@
 @import "postView";
 @import "adminLogin";
 @import "adminDashboard";
+@import "accountCreate";
 
 * {
   box-sizing: border-box;
@@ -112,6 +113,10 @@ main {
 
 .cta.yellow{
   background-color: $secondary-color !important;
+}
+
+.cta.green{
+  background-color: #217844 !important;
 }
 
 input {

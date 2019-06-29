@@ -152,6 +152,11 @@
 .postPictures {
   line-height: 1.5; }
 
+.accountCreate {
+  justify-content: center;
+  text-align: center;
+  align-items: center; }
+
 * {
   box-sizing: border-box; }
 
@@ -241,6 +246,9 @@ main {
 
 .cta.yellow {
   background-color: #eec60a !important; }
+
+.cta.green {
+  background-color: #217844 !important; }
 
 input {
   border-width: 1px;
