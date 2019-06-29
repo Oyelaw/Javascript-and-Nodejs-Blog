@@ -122,12 +122,12 @@
     background: white;
     color: black;
     text-align: center; }
-  .left-pane .PostImage,
-  .right-pane .PostImage {
+  .left-pane .postImage,
+  .right-pane .postImage {
     height: 470px;
     width: 100%; }
-    .left-pane .PostImage-extra,
-    .right-pane .PostImage-extra {
+    .left-pane .postImage-extra,
+    .right-pane .postImage-extra {
       height: 400px;
       width: 90%;
       margin: 20px 0 0 0; }
