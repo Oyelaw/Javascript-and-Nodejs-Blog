@@ -1,13 +1,16 @@
 // Widescreens
 @include mediaXl {
-  .index {
+  .index,
+  .postView {
     background: red;
   }
+
 }
 
 // Desktops & Laptops
 @include mediaLg {
-  .index {
+  .index,
+  .postView {
     background: blue;
   }
 
@@ -20,7 +23,8 @@
 
 // Tablets & Small Laptops
 @include mediaMd {
-  .index {
+  .index,
+  .postView {
     background: green;
   }
 
@@ -29,11 +33,16 @@
     grid-template-columns: 1fr;
     grid-gap: 20px;
   }
+
+  .postView {
+    grid-template-columns: 1fr;
+  }
 }
 
 // Smartphones
 @include mediaSm {
-  .index {
+  .index,
+  .postView {
     background: pink;
   }
 }

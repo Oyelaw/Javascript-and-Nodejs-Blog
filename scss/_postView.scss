@@ -1,0 +1,90 @@
+.postView {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 10px;
+  overflow: hidden;
+}
+
+.left-pane,
+ .right-pane {
+  background: white;
+
+  &-content {
+    margin: 1rem;
+    padding: 1rem;
+    background: white;
+    color: black;
+    text-align: center;
+  }
+
+  .PostImage {
+    height: 470px;
+    width: 100%;
+
+    &-extra {
+      height: 400px;
+      width: 90%;
+      margin: 20px 0 0 0;
+    }
+  }
+
+  .article {
+    line-height: 2.5;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.recent-post,
+.archives {
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+// .right-pane {
+//   background: green;
+// }
+
+
+// .postView {
+//   text-align: center;
+//   justify-content: center;
+//   overflow: hidden;
+// }
+//
+// .postViewContainer{
+//   display: grid;
+//   grid-template-columns: 3fr 1fr;
+//   grid-gap: 20px;
+// }
+//
+// .viewPostLeftPane{
+//   display: grid;
+//   grid-template-columns: 1fr;
+//   grid-gap: 10px;
+//
+// }
+//
+// .postViewImage {
+//   margin: 1em 2em;
+//   border: 1px solid $secondary-color;
+//   height: 470px;
+//   width: 700px;
+// }
+//
+// .article{
+//   line-height: 2.5;
+//   background: rgba($primary-color, $background-opacity);
+//   border-width: 1px 1px 1px 1px;
+//   border-style: solid;
+//   border-color: #fff;
+//   box-shadow: 20px 20px 20px 20px rgba($tetiary-color, $background-opacity);
+// }
+// .extraPostViewImage{
+//   margin: 4rem 0 0 0;
+//   border: 3px solid $secondary-color;
+//   height: 470px;
+//   width: 500px;
+// }

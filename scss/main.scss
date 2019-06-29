@@ -1,6 +1,7 @@
 @import "config";
 @import "menu";
 @import "index";
+@import "postView";
 
 * {
   box-sizing: border-box;
@@ -59,5 +60,6 @@ main {
   background: rgba(lighten($tetiary-color, 2), 0.5);
   height: 60px;
 }
+
 
 @import "mobile";
