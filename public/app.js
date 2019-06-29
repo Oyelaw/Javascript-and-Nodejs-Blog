@@ -164,6 +164,48 @@ app.bindCreatePostForm = function () {
   }
 };
 
+// Account creation form
+app.bindAccountCreateForm = function () {
+  var createAccountForm = document.getElementById('accountCreate');
+
+  if (createAccountForm != null) {
+    createAccountForm.addEventListener('submit', function (e) {
+
+      e.preventDefault();
+      var formId = this.id;
+      var path = this.action;
+      var method = this.method.toUpperCase();
+
+      // Get the form fields
+      var firstName = document.getElementById('firstName').value;
+      var lastName = document.getElementById('lastName').value;
+      var phone = document.getElementById('phone').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var tosAgreement = document.getElementById('tosAgreement').checked;
+
+      // Create Post request payload
+      var payload = {
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        email: email,
+        password: password,
+        tosAgreement: tosAgreement
+      };
+
+      // Send request
+      httpRequest.request(undefined, path, method, undefined, payload)
+        .then(function (response) {
+          app.formResponseProcessor(formId, payload, response);
+        })
+        .catch(function (err) {
+          console.log(`Error creating new user. Error: ${err}`);
+        })
+    })
+  }
+};
+
 // Process response from forms
 app.formResponseProcessor = function (formId, requestPayload, responsePayload) {
 
@@ -175,6 +217,23 @@ app.formResponseProcessor = function (formId, requestPayload, responsePayload) {
   if (formId == 'createPost') {
     ui.showAlert('Post created!!!', 'formSuccess alert');
     ui.clearPostCreateForm();
+  }
+
+  if (formId == 'accountCreate') {
+    var loginPayload = {
+      email: requestPayload.email,
+      password: requestPayload.password
+    }
+
+    httpRequest.request(undefined, 'api/tokens', 'POST', undefined, loginPayload)
+      .then(function (response) {
+        app.setSessionToken(response);
+        window.location = '/admin/dashboard'
+      })
+      .catch(function (err) {
+        console.log(`login error for new user. Error: ${err}`);
+      })
+
   }
 };
 
@@ -319,6 +378,8 @@ app.init = function () {
   app.bindLoginForm();
 
   app.bindLogoutButton();
+
+  app.bindAccountCreateForm();
 };
 
 window.onload = function(){
