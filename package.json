@@ -4,8 +4,11 @@
   "description": "A responsive blog built with javascript and node",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "start": "node index.js",
     "sass": "node-sass -w scss/ -o public/css/ --recursive"
+  },
+  "engines": {
+    "node": "8.11.3"
   },
   "author": "Okiki Oye-Lawrence",
   "license": "ISC",
