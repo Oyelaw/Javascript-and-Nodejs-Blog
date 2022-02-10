@@ -13,7 +13,7 @@
   "author": "Okiki Oye-Lawrence",
   "license": "ISC",
   "dependencies": {
-    "node-sass": "4.11.0"
+    "node-sass": "7.0.0"
   },
   "devDependencies": {
     "nodemon": "1.19.1"
